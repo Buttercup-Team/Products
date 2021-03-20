@@ -56,8 +56,14 @@ const ProductDetails = (props) => {
           className="expandedImgSlide"
           src={styles[selectedStyle].photos[imgView].url}
           alt="magnified card"
-          className={isImgViewClicked === true ? 'expandedImgSlide' : 'hiddenImgSlide'}
-          style={isImgViewClicked ? { left: -mouseXY.x * 1.5 + 150, top: -mouseXY.y * 1.75 + 300 } : null}
+          className={
+            isImgViewClicked === true ? 'expandedImgSlide' : 'hiddenImgSlide'
+          }
+          style={
+            isImgViewClicked
+              ? { left: -mouseXY.x * 1.5 + 150, top: -mouseXY.y * 1.75 + 300 }
+              : null
+          }
         />
       </div>
       <div className="ratingsComponent">
@@ -67,20 +73,26 @@ const ProductDetails = (props) => {
         />
       </div>
       <span className="paddingTop15px">{product.category}</span>
-      <h1 className="">{styles[selectedStyle].name} {product.name}</h1>
+      <h1 className="">
+        {styles[selectedStyle].name} {product.name}
+      </h1>
       <div>
-        {
-          styles[selectedStyle].sale_price
-            ? <>
-                <span className="origStrike paddingTop15px">
-                  ${styles[selectedStyle].original_price}
-                </span>
-                <span className="salePrice paddingTop15px">
-                  ${styles[selectedStyle].sale_price}
-                </span>
-              </>
-            : <span className="paddingTop15px">${styles[selectedStyle].original_price}</span>
-        }
+        {styles[selectedStyle].sale_price &&
+        styles[selectedStyle].sale_price !== 'null'
+          ? (
+            <>
+              <span className="origStrike paddingTop15px">
+                ${styles[selectedStyle].original_price}
+              </span>
+              <span className="salePrice paddingTop15px">
+                ${styles[selectedStyle].sale_price}
+              </span>
+            </>
+          ) : (
+            <span className="paddingTop15px">
+              ${styles[selectedStyle].original_price}
+            </span>
+          )}
       </div>
       <div className="paddingTop15px">
         STYLE &gt; {styles[selectedStyle].name}
@@ -98,22 +110,32 @@ const ProductDetails = (props) => {
         console.log(key[1].quantity, '=', key[1].size, key[0])
       }))} */}
       <div className="sizeQtyBarContainer">
-        <select id="sizeBar" className="" name="SELECT SIZE" onChange={sizeChangeHandler}>
-        {/* <select id="sizeBar" name="SELECT SIZE" onChange={(e) => { setSKU(e.target.value); }}> */}
+        <select
+          id="sizeBar"
+          className=""
+          name="SELECT SIZE"
+          onChange={sizeChangeHandler}
+        >
           <option value="">Select Size</option>
-          {Object.entries(styles[selectedStyle].skus).map((key) => (
-            key[1].quantity !== 0 ? <option value={key[0]} key={`size${key[0]}${key[1].size}`}>{key[1].size}</option> : <option key={`size${key[0]}${key[1].size}`} className="hiddenEle">null</option>
-          ))}
+          {Object.entries(styles[selectedStyle].skus).map((key, id) =>
+            key[1].quantity !== 0 
+            ? (
+              <option value={key[0]} key={`size${key[0]}${key[1].size}`}>
+                {key[1].size}
+              </option>
+            ) : (
+              <option key={`size${key[0]}${key[1].size}`} className="hiddenEle">
+                null
+              </option>
+            )
+          )}
         </select>
         <select id="qtyBar" className="" name="QUANTITY">
           <option>Select Qty</option>
           {arr.map((item) => (
-            <option key={`option${item}`}>
-              {item}
-            </option>
+            <option key={`option${item}`}>{item}</option>
           ))}
         </select>
-
       </div>
       <div className="flexSpaceBetween">
         <button type="submit" id="addToBag" className="">

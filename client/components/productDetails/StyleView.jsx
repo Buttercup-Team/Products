@@ -3,7 +3,7 @@ import React from 'react';
 const StyleView = (props) => {
   const { product, styles, selectedStyle, handleStyleClick } = props;
   const divideByFour = styles;
-  const StyleMapper = ({ row }) => (
+  const StyleMapper = ({ row }) =>
     styles.map((style, idx) => {
       if (Math.floor(idx / 4) === row) {
         return (
@@ -17,23 +17,26 @@ const StyleView = (props) => {
               styleidx={idx}
               alt={style.name + product.name}
               src={style.photos[0].thumbnail_url}
-              className={idx === selectedStyle ? 'selectedStyle styleThumbnail' : 'styleThumbnail '}
+              className={
+                idx === selectedStyle
+                  ? 'selectedStyle styleThumbnail'
+                  : 'styleThumbnail '
+              }
               key={`img${style.style_id}${idx}`}
             />
             <img
               key={`check${style.style_id}${idx}`}
               alt="./img/checkmark.png"
               src="./img/checkmark.png"
-              className={idx === selectedStyle ? 'ShowEle checkmark' : 'hiddenEle '}
+              className={
+                idx === selectedStyle ? 'ShowEle checkmark' : 'hiddenEle '
+              }
             />
           </button>
         );
       }
-      return (
-        null
-      );
-    })
-  );
+      return null;
+    });
 
   return (
     <div>

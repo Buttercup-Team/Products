@@ -7,24 +7,25 @@ import ProductDescription from './productDetails/ProductDescription';
 const axios = require('axios');
 
 const App = () => {
-  const [product, setProduct] = useState(
-    {
-      features: [
-        {
-          feature: '',
-          value: '',
-        },
-      ],
-    },
-  );
+  const [product, setProduct] = useState({
+    features: [
+      {
+        feature: '',
+        value: '',
+      },
+    ],
+  });
+  console.log(product);
   const [styles, setStyles] = useState([
     {
       name: '',
       sale_price: '',
-      photos: [{
-        thumbnail_url: '',
-        url: '',
-      }],
+      photos: [
+        {
+          thumbnail_url: '',
+          url: '',
+        },
+      ],
       style_id: '00000',
       skus: {
         0: {
@@ -103,7 +104,9 @@ const App = () => {
 
   const handleStyleClick = (e) => {
     setSelectedStyle(parseInt(e.target.attributes.styleidx.value, 10));
-    setImgView(selectedStyleImgMemory[parseInt(e.target.attributes.styleidx.value, 10)]);
+    setImgView(
+      selectedStyleImgMemory[parseInt(e.target.attributes.styleidx.value, 10)]
+    );
   };
 
   const getOverallRating = (data) => {
@@ -142,17 +145,20 @@ const App = () => {
     // console.log(randomProductUrl);
 
     // get the default product to populate the page on start up
-    axios.get(`product/${productID}`)
+    axios
+      .get(`product/${productID}`)
       .then((productRes) => {
         setProduct(productRes.data);
         // get the styles data from the default product id
-        axios.get(`/styles/${productID}`)
+        axios
+          .get(`/styles/${productID}`)
           .then((styleRes) => {
-            setSelectedStyleImgMemory(styleMemArrMaker(styleRes.data.results.length));
-            setStyles(styleRes.data.results);
-            setStyles(styleRes.data.results);
+            setSelectedStyleImgMemory(styleMemArrMaker(styleRes.data.length));
+            setStyles(styleRes.data);
+            setStyles(styleRes.data);
             // get the reviews meta data from the default product id
-            axios.get(`reviews/meta/id=${productID}`)
+            axios
+              .get(`reviews/meta/id=${productID}`)
               .then((ratingMeta) => {
                 const metaData = ratingMeta.data;
                 const good = parseInt(metaData.recommended.true, 10) || 0;
@@ -161,11 +167,13 @@ const App = () => {
                 setMeta(metaData);
                 setRating(getOverallRating(metaData));
                 // get all reviews for the default product id
-                axios.get(`reviews/id=${productID}&count=${totalReviews}`)
+                axios
+                  .get(`reviews/id=${productID}&count=${totalReviews}`)
                   .then((allReviews) => {
                     setReviews(allReviews.data.results);
                     // get questions for q&a
-                    axios.get(`/questions/id=${productID}`)
+                    axios
+                      .get(`/questions/id=${productID}`)
                       .then((question) => {
                         setQuestions(question.data.results);
                       })
@@ -195,8 +203,7 @@ const App = () => {
     getOneProduct(newProductID);
   };
 
-  useState(() => getOneProduct(20103));
-
+  useState(() => getOneProduct(20111));
 
   return (
     <div className="">
@@ -217,7 +224,9 @@ const App = () => {
                   className="logo-search"
                   placeholder="new product ID"
                   value={newProductID}
-                  onChange={(e) => { setNewProductID(e.target.value); }}
+                  onChange={(e) => {
+                    setNewProductID(e.target.value);
+                  }}
                 />
                 <button
                   type="submit"
@@ -246,7 +255,11 @@ const App = () => {
         />
         <div className="gridSpacer" />
         <div className="gridSpacer" />
-        <ProductDescription product={product} styles={styles} selectedStyle={selectedStyle} />
+        <ProductDescription
+          product={product}
+          styles={styles}
+          selectedStyle={selectedStyle}
+        />
         <div className="gridSpacer" />
         <div className="gridSpacer" />
         <div id="questions-answers">
