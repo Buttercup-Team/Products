@@ -1,7 +1,7 @@
 const express = require('express');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3005;
 const path = require('path');
 const db = require('./db.js');
 
@@ -25,10 +25,9 @@ app.get('/product/:params', (req, res) => {
   });
 });
 
-app.get('/styles/:params', (req, res) => {
+app.get('/styles/:params', async (req, res) => {
   const { params } = req.params;
   const queryStr1 = `select * from styles where productId = ${params}`;
-
   db.query(queryStr1)
     .then((results) => {
       const promiseArr = [];

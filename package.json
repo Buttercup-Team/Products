@@ -4,11 +4,7 @@
   "description": "Front End Capstone",
   "scripts": {
     "start": "nodemon server",
-    "test": "jest",
-    "build": "webpack",
-    "watch": "webpack -w",
-    "start:prod": "something",
-    "build:prod": "webpack --config webpack.prod.js"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -26,10 +22,7 @@
     "express": "^4.17.1",
     "nodemon": "^2.0.7",
     "path": "^0.12.7",
-    "pg": "^8.5.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "underscore": "^1.12.0"
+    "pg": "^8.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.13.1",
